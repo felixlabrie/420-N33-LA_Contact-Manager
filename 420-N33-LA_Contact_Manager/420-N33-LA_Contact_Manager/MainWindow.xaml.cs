@@ -40,14 +40,37 @@ namespace _420_N33_LA_Contact_Manager
 
         }
 
-        private void import_Click(object sender, RoutedEventArgs e)
-        {
 
+
+        //when clicking on any contact, it opens a new window with the contacts information
+        private void contact_Click(object sender, RoutedEventArgs e)
+        {
+            SubWindow subWindow = new SubWindow();
+            subWindow.Show();
         }
 
+        //export contact to csv file
         private void export_Click(object sender, RoutedEventArgs e)
         {
+            WriteToXls(DataTable2CSV(myDataGrid, ","));
 
         }
+
+        //import contact from cvs file
+        private void import_Clck(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public static string ContactToCSV(, string separator = ",")
+        {
+
+        }
+
+        private string WriteToXls(string dataToWrite)
+        {
+
+        }
+
     }
 }
