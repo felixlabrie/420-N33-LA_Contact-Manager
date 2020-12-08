@@ -24,5 +24,30 @@ namespace _420_N33_LA_Contact_Manager
         {
             InitializeComponent();
         }
+
+        private void add_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void save_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void import_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
