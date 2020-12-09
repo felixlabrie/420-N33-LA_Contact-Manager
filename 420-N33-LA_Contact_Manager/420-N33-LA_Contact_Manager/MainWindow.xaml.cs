@@ -45,32 +45,41 @@ namespace _420_N33_LA_Contact_Manager
         //when clicking on any contact, it opens a new window with the contacts information
         private void contact_Click(object sender, RoutedEventArgs e)
         {
-            SubWindow subWindow = new SubWindow();
-            subWindow.Show();
+            secondWindow second = new secondWindow();
+            second.ContactID = 1;
+            second.Show();
         }
 
         //export contact to csv file
         private void export_Click(object sender, RoutedEventArgs e)
         {
-            WriteToXls(DataTable2CSV(myDataGrid, ","));
+            ContactToCSV();
 
         }
 
         //import contact from cvs file
-        private void import_Clck(object sender, RoutedEventArgs e)
+        private void import_Click(object sender, RoutedEventArgs e)
         {
-
+            string path = @"contacts.csv";
+            string st = File.ReadAllText(path);
         }
 
-        public static string ContactToCSV(, string separator = ",")
+        
+        public static void ContactToCSV(String name, string lastName, int phoneNumber, string email, string filepath)
         {
-
+            try
+            {
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(filepath, true))
+                {
+                    file.WriteLine(name + ", " + lastName + ", " + phoneNumber + ", " + email);
+                    MessageBox.Show("Data has been sucessfully exported to CSV file", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            } catch(Exception ex)
+            {
+                throw new ApplicationException("Error", ex);
+            }
         }
-
-        private string WriteToXls(string dataToWrite)
-        {
-
-        }
+        
 
     }
 }
