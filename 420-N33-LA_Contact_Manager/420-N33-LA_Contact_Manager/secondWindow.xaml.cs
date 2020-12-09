@@ -25,6 +25,9 @@ namespace _420_N33_LA_Contact_Manager
         public secondWindow()
         {
             InitializeComponent();
+            List<User> contacts = new List<User>();
+            contacts.Add(new User() { Name = "John", LastName = "Smith", PhoneNumber = "514-434-5665", Email = "sam.smith@live.com" });
+            lvDataBinding.ItemsSOurce = contacts;
         }
 
         private int id;

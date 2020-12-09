@@ -23,6 +23,7 @@ namespace _420_N33_LA_Contact_Manager
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void add_Click(object sender, RoutedEventArgs e)

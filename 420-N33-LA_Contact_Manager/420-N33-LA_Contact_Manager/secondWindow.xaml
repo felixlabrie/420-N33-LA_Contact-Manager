@@ -7,31 +7,28 @@
         mc:Ignorable="d"
         Title="Contact Information" Height="160" Width="400">
     
-    <Grid ShowGridLines="true">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
+  
 
         <ListView BorderThickness="0" ItemsSource="{Binding Contacts}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                    <Label>First Name:</Label>
-                    <Label Grid.Row="1">Last Name:</Label>
-                    <Label Grid.Row="2" >Phone Number:</Label>
-                    <Label Grid.Row="3">Email:</Label>
-                    <TextBlock Grid.Column="1" Text="{Binding name}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding lastName}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding phoneNumber}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding email}"/>
+                <WrapPanel>
+                    <TextBlock Text="Name:"/>
+                    <TextBlock Text="{Binding name} &#10;"/>
+                    <TextBlock Text="Last Name:"/>
+                    <TextBlock Text="{Binding lastName} &#10;"/>
+                    <TextBlock Text="Phone Number:"/>
+                    <TextBlock Text="{Binding phoneNumber}&#10;"/>
+                    <TextBlock Text="Email: "/>
+                    <TextBlock Text="{Binding email}&#10;"/>
                     <Button x:Name="save" Content="Save Modifications" Click="save_Click" Height="22"  Grid.Column="0" Grid.Row="4"/>
                     <Button Name="goBack" Content="Cancel and Exit" Click="goBack_Click" Height="23" Grid.Column="1" Grid.Row="4"></Button>
-                    </Grid>
+                    </WrapPanel>
+                
+                    
                 </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-    </Grid>
+
     
 </Window>
