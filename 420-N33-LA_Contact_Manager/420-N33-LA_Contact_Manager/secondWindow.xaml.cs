@@ -59,7 +59,7 @@ namespace _420_N33_LA_Contact_Manager
 
             {
 
-                CmdString = "SELECT fname, lname, hire_date FROM Contacts WHERE contact_id = "+ id;
+                CmdString = "SELECT name, lastName, phoneNumber, email FROM Contacts WHERE contact_id = "+ id;
 
                 SqlCommand cmd = new SqlCommand(CmdString, con);
 
