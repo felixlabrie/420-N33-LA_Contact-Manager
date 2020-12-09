@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,13 +41,13 @@ namespace _420_N33_LA_Contact_Manager
         {
 
         }
-
+        
 
 
         //when clicking on any contact, it opens a new window with the contacts information
-        private void contact_Click(object sender, RoutedEventArgs e)
+        private void edit_Click(object sender, RoutedEventArgs e)
         {
-            secondWindow second = new secondWindow();
+            SecondWindow second = new SecondWindow();
             second.ContactID = 1;
             second.Show();
         }
@@ -54,7 +55,7 @@ namespace _420_N33_LA_Contact_Manager
         //export contact to csv file
         private void export_Click(object sender, RoutedEventArgs e)
         {
-            ContactToCSV();
+           // ContactToCSV();
 
         }
 

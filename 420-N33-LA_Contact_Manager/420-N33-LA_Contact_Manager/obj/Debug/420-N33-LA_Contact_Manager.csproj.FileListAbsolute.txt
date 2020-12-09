@@ -28,3 +28,5 @@ C:\Users\Marin\Source\Repos\420-N33-LA_Contact-Manager2\420-N33-LA_Contact_Manag
 C:\Users\Marin\Source\Repos\420-N33-LA_Contact-Manager2\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\420-N33-LA_Contact_Manager.csproj.CoreCompileInputs.cache
 C:\Users\Marin\Source\Repos\420-N33-LA_Contact-Manager2\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\420-N33-LA_Contact_Manager.exe
 C:\Users\Marin\Source\Repos\420-N33-LA_Contact-Manager2\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\420-N33-LA_Contact_Manager.pdb
+C:\Users\Marin\source\repos\420-N33-LA_Contact-Manager2\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\SecondWindow.g.cs
+C:\Users\Marin\source\repos\420-N33-LA_Contact-Manager2\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\SecondWindow.baml

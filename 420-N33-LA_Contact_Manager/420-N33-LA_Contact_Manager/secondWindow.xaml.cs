@@ -20,16 +20,19 @@ namespace _420_N33_LA_Contact_Manager
     /// <summary>
     /// Interaction logic for secondWindow.xaml
     /// </summary>
-    public partial class secondWindow : Window
+    public partial class SecondWindow : Window
     {
-        public secondWindow()
+        public SecondWindow()
         {
             InitializeComponent();
-            List<User> contacts = new List<User>();
-            contacts.Add(new User() { Name = "John", LastName = "Smith", PhoneNumber = "514-434-5665", Email = "sam.smith@live.com" });
-            lvDataBinding.ItemsSOurce = contacts;
+            
+            Loaded += SecondWindow_Loaded ;
         }
 
+        private void SecondWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            FillContacts();
+        }
         private int id;
         public int ContactID
         {
@@ -45,6 +48,18 @@ namespace _420_N33_LA_Contact_Manager
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
+            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
+
+            string CmdString = string.Empty;
+
+            using (SqlConnection con = new SqlConnection(ConString))
+
+            {
+
+                CmdString = $"update [dbo].[Contacts] set FName= {} LName={} where ContactID= " + id;
+                SqlCommand cmd = new SqlCommand(CmdString, con);
+   
+            }
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
@@ -54,7 +69,7 @@ namespace _420_N33_LA_Contact_Manager
 
         {
             
-            string ConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
+            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
 
             string CmdString = string.Empty;
 
@@ -62,7 +77,7 @@ namespace _420_N33_LA_Contact_Manager
 
             {
 
-                CmdString = "SELECT name, lastName, phoneNumber, email FROM Contacts WHERE contact_id = "+ id;
+                CmdString = "SELECT FName, LName FROM Contacts WHERE ContactID = "+ id;
 
                 SqlCommand cmd = new SqlCommand(CmdString, con);
 
@@ -71,8 +86,8 @@ namespace _420_N33_LA_Contact_Manager
                 DataTable dt = new DataTable("Contacts");
 
                 sda.Fill(dt);
+                lvDataBinding.ItemsSource = dt.DefaultView;
 
-                
 
             }
 
