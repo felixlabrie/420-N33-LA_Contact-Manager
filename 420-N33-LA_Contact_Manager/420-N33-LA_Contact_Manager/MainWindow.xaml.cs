@@ -50,6 +50,7 @@ namespace _420_N33_LA_Contact_Manager
             SecondWindow second = new SecondWindow();
             second.ContactID = 1;
             second.Show();
+            this.Close();
         }
 
         //export contact to csv file
