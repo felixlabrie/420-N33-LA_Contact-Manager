@@ -56,9 +56,10 @@ namespace _420_N33_LA_Contact_Manager
 
             {
 
-               CmdString = $"update [dbo].[Contacts] set FName={} LName={} where ContactID= " + id;
-                SqlCommand cmd = new SqlCommand(CmdString, con);
-   
+               CmdString = $"update [dbo].[Contacts] set FName=@FName LName=@LName where ContactID= " + id;
+
+
+
             }
             MainWindow main = new MainWindow();
             main.Show();

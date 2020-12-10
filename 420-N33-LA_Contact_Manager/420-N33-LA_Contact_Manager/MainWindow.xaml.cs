@@ -29,7 +29,9 @@ namespace _420_N33_LA_Contact_Manager
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-
+            AddWindow add = new AddWindow();
+            add.Show();
+            this.Close();
         }
 
         private void delete_Click(object sender, RoutedEventArgs e)
