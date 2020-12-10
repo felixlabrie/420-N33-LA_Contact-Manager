@@ -39,7 +39,7 @@
 
         </ListBox>
 
-        <Button x:Name="add" Click="add_Click" Content="Add New" Grid.Column="6" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
+        <Button x:Name="add" Click="add_Click" Content="Add New" Grid.Column="6" HorizontalAlignment="Center" Grid.Row="9" Width="66" Margin="4.5,11,5,0" Height="20" VerticalAlignment="Top"/>
         <Button x:Name="edit" Click="edit_Click" Content="Edit" Grid.Column="8" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
         <Button x:Name="delete" Click="delete_Click" Content="Delete" Grid.Column="7" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
 
