@@ -40,13 +40,13 @@
         </ListBox>
 
         <Button x:Name="add" Click="add_Click" Content="Add New" Grid.Column="6" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
+        <Button x:Name="edit" Click="edit_Click" Content="Edit" Grid.Column="8" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
         <Button x:Name="delete" Click="delete_Click" Content="Delete" Grid.Column="7" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
-        <Button x:Name="save" Click="save_Click" Content="Save" Grid.Column="8" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
 
         <Button x:Name="import" Click="import_Click" Content="Import CSV" Grid.Column="10" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
         <Button x:Name="export" Click="export_Click" Content="Export CSV" Grid.Column="10" HorizontalAlignment="Center" Grid.Row="8" VerticalAlignment="Center" Width="66"/>
 
-        <TextBox Background="#1C1C1" Foreground="white"  Grid.ColumnSpan="5" Grid.Column="6" HorizontalAlignment="Center" Height="24" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="380"/>
+        <TextBox  Foreground="white"  Grid.ColumnSpan="5" Grid.Column="6" HorizontalAlignment="Center" Height="24" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="380"/>
 
     </Grid>
 
