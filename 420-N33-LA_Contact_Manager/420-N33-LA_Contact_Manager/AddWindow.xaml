@@ -10,13 +10,11 @@
 
 
     <ListView Name="lvDataBinding" BorderThickness="0" >
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <WrapPanel>
+
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Name:"/>
-                            <TextBox Text="{Binding FName}" />
+                            <TextBox Name="txtFName"  Text="{Binding FName}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Last Name:"/>
@@ -24,11 +22,11 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Phone Number:"/>
-                            <TextBox Text="{Binding Phone}"/>
+                            <TextBox Name="txtPhone"  Text="{Binding Phone}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Email: "/>
-                            <TextBox  Text="{Binding Email}"/>
+                            <TextBox Name="txtEmail" Text="{Binding Email}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content=" "/>
@@ -42,9 +40,7 @@
 
 
                     </StackPanel>
-                </WrapPanel>
-            </DataTemplate>
-        </ListView.ItemTemplate>
+
     </ListView>
 
 

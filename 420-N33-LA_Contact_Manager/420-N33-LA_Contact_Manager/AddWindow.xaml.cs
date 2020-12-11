@@ -48,19 +48,7 @@ namespace _420_N33_LA_Contact_Manager
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
-
-            string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-
-            {
-
-                CmdString = $"insert [dbo].[Contacts] set FName=@FName LName=@LName whereID= " + id;
-
-
-
-            }
+            Add();
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
@@ -91,6 +79,35 @@ namespace _420_N33_LA_Contact_Manager
 
             }
 
+        }
+        private void Add()
+        {
+            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
+
+            string CmdString = string.Empty;
+
+            using (SqlConnection con = new SqlConnection(ConString))
+
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("INSERT ContactDB SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email" + "WHERE ID=@ID", con))
+                {
+
+                    cmd.Parameters.AddWithValue("@FName", txtFName);
+                    cmd.Parameters.AddWithValue("@LName", txtLName);
+                    cmd.Parameters.AddWithValue("@Phone", txtPhone);
+                    cmd.Parameters.AddWithValue("@Email", txtEmail);
+                    int rows = cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+
+
+
+
+
+
+
+            }
         }
 
     }

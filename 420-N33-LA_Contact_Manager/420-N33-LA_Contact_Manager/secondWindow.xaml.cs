@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,22 +14,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 
 namespace _420_N33_LA_Contact_Manager
 {
     /// <summary>
-    /// Interaction logic for secondWindow.xaml
+    /// Interaction logic for SecondWindow.xaml
     /// </summary>
     public partial class SecondWindow : Window
     {
         public SecondWindow()
         {
             InitializeComponent();
-            
-            Loaded += SecondWindow_Loaded ;
+
+            Loaded += SecondWindow_Loaded;
+
         }
 
         private void SecondWindow_Loaded(object sender, RoutedEventArgs e)
@@ -34,7 +35,7 @@ namespace _420_N33_LA_Contact_Manager
             FillContacts();
         }
         private int id;
-        public int ContactID
+        public int ID
         {
             get { return id; }
             set { id = value; }
@@ -48,8 +49,8 @@ namespace _420_N33_LA_Contact_Manager
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-            
 
+            Update();
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
@@ -58,7 +59,7 @@ namespace _420_N33_LA_Contact_Manager
         private void FillContacts()
 
         {
-            
+
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
 
             string CmdString = string.Empty;
@@ -67,13 +68,13 @@ namespace _420_N33_LA_Contact_Manager
 
             {
 
-                CmdString = "SELECT FName, LName FROM Contacts WHERE ID = "+ id;
+                CmdString = "SELECT FName, LName, Phone, Email FROM Contacts WHERE ID = " + id;
 
                 SqlCommand cmd = new SqlCommand(CmdString, con);
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
-                DataTable dt = new DataTable("Contacts");
+                DataTable dt = new DataTable("ContactDB");
 
                 sda.Fill(dt);
                 lvDataBinding.ItemsSource = dt.DefaultView;
@@ -93,15 +94,25 @@ namespace _420_N33_LA_Contact_Manager
 
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE ContactDB SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email" + "WHERE ID=@ID", con)
+                using (SqlCommand cmd = new SqlCommand("UPDATE ContactDB SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email" + "WHERE ID=@ID", con))
                 {
-                    
-                    /.Parameters.AddWithValue("@FName", lvDataBinding.SelectedItem
 
-
+                    cmd.Parameters.AddWithValue("@FName", txtFName);
+                    cmd.Parameters.AddWithValue("@LName", txtLName);
+                    cmd.Parameters.AddWithValue("@Phone", txtPhone);
+                    cmd.Parameters.AddWithValue("@Email", txtEmail);
+                    int rows = cmd.ExecuteNonQuery();
+                    con.Close();
                 }
-                   
+
+
+
+
+
+
+
             }
         }
+
     }
 }
