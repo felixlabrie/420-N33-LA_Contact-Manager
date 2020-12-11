@@ -50,7 +50,12 @@ namespace _420_N33_LA_Contact_Manager
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-
+            Regex phone = new Regex(@"[a-zA-Z]");
+            if (phone.IsMatch(txtPhone.Text))
+            {
+                MessageBox.Show("Phone number cannot include letters, try again");
+                return;
+            }
             Update();
             MainWindow main = new MainWindow();
             main.Show();
