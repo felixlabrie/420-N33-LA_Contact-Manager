@@ -48,19 +48,8 @@ namespace _420_N33_LA_Contact_Manager
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
+            
 
-            string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-
-            {
-
-               CmdString = $"update [dbo].[Contacts] set FName=@FName LName=@LName where ContactID= " + id;
-
-
-
-            }
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
@@ -78,7 +67,7 @@ namespace _420_N33_LA_Contact_Manager
 
             {
 
-                CmdString = "SELECT FName, LName FROM Contacts WHERE ContactID = "+ id;
+                CmdString = "SELECT FName, LName FROM Contacts WHERE ID = "+ id;
 
                 SqlCommand cmd = new SqlCommand(CmdString, con);
 
@@ -94,5 +83,25 @@ namespace _420_N33_LA_Contact_Manager
 
         }
 
+        private void Update()
+        {
+            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
+
+            string CmdString = string.Empty;
+
+            using (SqlConnection con = new SqlConnection(ConString))
+
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("UPDATE ContactDB SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email" + "WHERE ID=@ID", con)
+                {
+                    
+                    /.Parameters.AddWithValue("@FName", lvDataBinding.SelectedItem
+
+
+                }
+                   
+            }
+        }
     }
 }
