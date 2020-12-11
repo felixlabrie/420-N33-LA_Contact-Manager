@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlServerCe;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace _420_N33_LA_Contact_Manager
             get { return id; }
             set { id = value; }
         }
-        private void goBack_Click(object sender, RoutedEventArgs e)
+        private void cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = new MainWindow();
             main.Show();
@@ -67,25 +68,39 @@ namespace _420_N33_LA_Contact_Manager
             using (SqlConnection con = new SqlConnection(ConString))
 
             {
+                con.Open();
 
-                CmdString = "SELECT FName, LName, Phone, Email FROM Contacts WHERE ID = " + id;
+                using (SqlDataAdapter a = new SqlDataAdapter(
+                    "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id, con))
+                {
+                    
+                    CmdString = "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id;
 
-                SqlCommand cmd = new SqlCommand(CmdString, con);
+                    SqlCommand cmd = new SqlCommand(CmdString, con);
 
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
-                DataTable dt = new DataTable("ContactDB");
-
-                sda.Fill(dt);
-                userDataGrid.ItemsSource = dt.DefaultView;
+                    DataTable dt = new DataTable("ContactDB");
 
 
+                    sda.Fill(dt);
+
+                    txtFName.Text = dt.Rows[0]["FName"].ToString();
+                    txtLName.Text = dt.Rows[0]["LName"].ToString();
+                    txtPhone.Text = dt.Rows[0]["Phone"].ToString();
+                    txtEmail.Text = dt.Rows[0]["Email"].ToString();
+
+
+
+                }
             }
 
         }
 
         private void Update()
+
         {
+
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
 
             string CmdString = string.Empty;
@@ -94,15 +109,15 @@ namespace _420_N33_LA_Contact_Manager
 
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE ContactDB SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email" + "WHERE ID=@ID", con))
+                using (SqlCommand cmd = new SqlCommand("UPDATE [dbo].[Contacts] SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email WHERE ID = " + id, con))
                 {
-
-                    //cmd.Parameters.AddWithValue("@FName", txtFName);
-                    //cmd.Parameters.AddWithValue("@LName", txtLName);
-                    //cmd.Parameters.AddWithValue("@Phone", txtPhone);
-                    //cmd.Parameters.AddWithValue("@Email", txtEmail);
-                    //int rows = cmd.ExecuteNonQuery();
-                    //con.Close();
+                    
+                    cmd.Parameters.AddWithValue("@FName", txtFName.Text);
+                    cmd.Parameters.AddWithValue("@LName", txtLName.Text);
+                    cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
+                    cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
                 }
 
 

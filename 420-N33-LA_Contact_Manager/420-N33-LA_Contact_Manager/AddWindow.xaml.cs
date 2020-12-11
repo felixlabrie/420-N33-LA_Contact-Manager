@@ -39,7 +39,7 @@ namespace _420_N33_LA_Contact_Manager
             get { return id; }
             set { id = value; }
         }
-        private void goBack_Click(object sender, RoutedEventArgs e)
+        private void cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = new MainWindow();
             main.Show();
@@ -90,14 +90,17 @@ namespace _420_N33_LA_Contact_Manager
 
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT ContactDB SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email" + "WHERE ID=@ID", con))
+      
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[Contacts](FName, LName, Phone, Email) VALUES (@FName, @LName, @Phone, @Email)", con))
                 {
 
-                    cmd.Parameters.AddWithValue("@FName", txtFName);
-                    cmd.Parameters.AddWithValue("@LName", txtLName);
-                    cmd.Parameters.AddWithValue("@Phone", txtPhone);
-                    cmd.Parameters.AddWithValue("@Email", txtEmail);
+                    cmd.Parameters.AddWithValue("@FName", txtFName.Text);
+                    cmd.Parameters.AddWithValue("@LName", txtLName.Text);
+                    cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
+                    cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+                    cmd.ExecuteNonQuery();
                     con.Close();
+
                 }
 
 

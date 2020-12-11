@@ -5,30 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_420_N33_LA_Contact_Manager"
         mc:Ignorable="d"
-        Title="Contact Information" Height="220" Width="200">
+        Title="Add New Contact " Height="180" Width="300">
 
-    <Grid  ShowGridLines="True">
-        <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+    <Grid Name="myGrid" Background="#1C1C1C">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Content="First Name: "/>
-        <TextBox Name="txtFName" Grid.Column="1"/>
-        <Label Content="Last Name: " Grid.Row="1"/>
-        <TextBox Name="txtLName" Grid.Column="1" Grid.Row="1"/>
-        <Label Content="Phone: " Grid.Row="2"/>
-        <TextBox Name="txtPhone" Grid.Column="1" Grid.Row="2"/>
-        <Label Content="Email: " Grid.Row="3"/>
-        <TextBox Name="txtEmail" Grid.Column="1" Grid.Row="3"/>
-        <Button x:Name="save" Content="Save" Click="save_Click" Height="22"  Grid.Column="0" Grid.Row="4" Margin="21,10,21,6.667"/>
-        <Button Name="goBack" Content="Cancel" Click="goBack_Click" Height="23" Grid.Column="1" Grid.Row="4" Margin="10,9,27,6.667"></Button>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="38.667"/>
+                </Grid.RowDefinitions>
 
+                <TextBlock Grid.Row="0" Text="First name:" Foreground="White" Margin="-52,-54,36,54"/>
+                <TextBox Grid.Row="0" x:Name="txtFName" Margin="0,-56,-47,56" Grid.Column="1"/>
+
+                <TextBlock Text="Last name:" Foreground="White" Margin="-52,-31,36,33" />
+                <TextBox x:Name="txtLName" Margin="0,-33,-47,33" Grid.Column="1"/>
+
+                <TextBlock Grid.Row="0" Foreground="White" Text="Phone:" Margin="-52,-10,36,10"/>
+                <TextBox Grid.Row="0" x:Name="txtPhone" Margin="0,-10,-47,10" RenderTransformOrigin="0.502,3.593" Grid.Column="1"/>
+
+                <TextBlock Text="Email:" Foreground="White" Margin="-52,13,50,25.667" Grid.RowSpan="5"/>
+                <TextBox x:Name="txtEmail" Margin="0,13,-47,25.667" RenderTransformOrigin="0.66,4.111" Grid.Column="1" Grid.RowSpan="5"/>
+                
+                <Button x:Name="save" Content="Save" Click="save_Click" Width="60" Height="20" Grid.Row="4" Margin="-16,31,19,-12.333"/>
+                <Button x:Name="goBack" Content="Cancel" Click="cancel_Click" Width="60"  Height="20" Grid.Row="4" Margin="10,31,-8,-12.333" Grid.Column="1"/>
+            </Grid>
+
+        </StackPanel>
     </Grid>
+
 </Window>
+
