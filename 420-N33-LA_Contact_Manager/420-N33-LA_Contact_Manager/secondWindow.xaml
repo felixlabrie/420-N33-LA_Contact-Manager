@@ -5,48 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_420_N33_LA_Contact_Manager"
         mc:Ignorable="d"
-        Title="Contact Information" Height="220" Width="200">
+        Title="Update Contact" Height="180" Width="300">
 
+    <Grid Name="myGrid" Background="#1C1C1C">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="38.667"/>
+                </Grid.RowDefinitions>
 
-    
-        <ListView Name="lvDataBinding" BorderThickness="0" >
-            <ListView.ItemTemplate>
-            <DataTemplate>
-                <WrapPanel>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Name:"/>
-                            <TextBox Text="{Binding FName}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Last Name:"/>
-                            <TextBox Name="txtLName"  Text="{Binding LName}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Phone Number:"/>
-                            <TextBox Text=""/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Email: "/>
-                            <TextBox  Text=""/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content=" "/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="save" Content="Save Modifications" Click="save_Click" Height="22"  Grid.Column="0" Grid.Row="4"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name="goBack" Content="Cancel and Exit" Click="goBack_Click" Height="23" Grid.Column="1" Grid.Row="4"></Button>
-                        </StackPanel>
+                <TextBlock Grid.Row="0" Text="First name:" Foreground="White" Margin="-52,-54,36,54"/>
+                <TextBox Grid.Row="0" x:Name="txtFName" Margin="0,-56,-47,56" Grid.Column="1"/>
 
+                <TextBlock Text="Last name:" Foreground="White" Margin="-52,-31,36,33" />
+                <TextBox x:Name="txtLName" Margin="0,-33,-47,33" Grid.Column="1"/>
 
-                    </StackPanel>
-                </WrapPanel>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+                <TextBlock Grid.Row="0" Text="Phone:" Foreground="White" Margin="-52,-10,36,10"/>
+                <TextBox Grid.Row="0" x:Name="txtPhone" Margin="0,-10,-47,10" RenderTransformOrigin="0.502,3.593" Grid.Column="1"/>
 
+                <TextBlock Text="Email:" Foreground="White" Margin="-52,13,50,25.667" Grid.RowSpan="5"/>
+                <TextBox x:Name="txtEmail" Margin="0,13,-47,25.667" RenderTransformOrigin="0.66,4.111" Grid.Column="1" Grid.RowSpan="5"/>
+                
+                <Button x:Name="save" Content="Save" Click="save_Click" Width="60" Height="20" Grid.Row="4" Margin="-16,31,19,-12.333"/>
+                <Button x:Name="goBack" Content="Cancel" Click="cancel_Click" Width="60"  Height="20" Grid.Row="4" Margin="10,31,-8,-12.333" Grid.Column="1"/>
+            </Grid>
 
+        </StackPanel>
+    </Grid>
 
 </Window>
