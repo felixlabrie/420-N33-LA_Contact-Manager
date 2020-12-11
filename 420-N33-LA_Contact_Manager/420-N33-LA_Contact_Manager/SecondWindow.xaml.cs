@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlServerCe;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,31 +15,29 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
 namespace _420_N33_LA_Contact_Manager
 {
     /// <summary>
-    /// Interaction logic for secondWindow.xaml
+    /// Interaction logic for SecondWindow.xaml
     /// </summary>
-    public partial class AddWindow : Window
+    public partial class SecondWindow : Window
     {
-        public AddWindow()
+        public SecondWindow()
         {
             InitializeComponent();
 
-            Loaded += AddWindow_Loaded;
+            Loaded += SecondWindow_Loaded;
+
         }
 
-        private void AddWindow_Loaded(object sender, RoutedEventArgs e)
+        private void SecondWindow_Loaded(object sender, RoutedEventArgs e)
         {
             FillContacts();
         }
         private int id;
-        public int ContactID
+        public int ID
         {
             get { return id; }
             set { id = value; }
@@ -53,9 +55,9 @@ namespace _420_N33_LA_Contact_Manager
             if (phone.IsMatch(txtPhone.Text))
             {
                 MessageBox.Show("Phone number cannot include letters, try again");
-        
+                return;
             }
-            Add();
+            Update();
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
@@ -63,85 +65,96 @@ namespace _420_N33_LA_Contact_Manager
 
         private void FillContacts()
 
-        { 
-            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
-
-            string CmdString = string.Empty;
-
-            SqlConnection con = new SqlConnection(ConString);
-
-            try
-            {
-               
-                using (con)
-
-                {
-
-                    CmdString = "SELECT FName, LName FROM Contacts WHERE ID = " + id;
-
-                    SqlCommand cmd = new SqlCommand(CmdString, con);
-
-                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
-
-                    DataTable dt = new DataTable("Contacts");
-
-
-
-
-                }
-            } catch (Exception)
-            {
-                MessageBox.Show("Could not fill the database");
-            } finally
-            {
-                con.Close();
-            }
-
-        }
-        private void Add()
         {
-            
+
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
+
             string CmdString = string.Empty;
             SqlConnection con = new SqlConnection(ConString);
             try
             {
-                
+
 
                 using (con)
 
                 {
                     con.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[Contacts](FName, LName, Phone, Email) VALUES (@FName, @LName, @Phone, @Email)", con))
+                    using (SqlDataAdapter a = new SqlDataAdapter(
+                        "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id, con))
+                    {
+
+                        CmdString = "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id;
+
+                        SqlCommand cmd = new SqlCommand(CmdString, con);
+
+                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
+
+                        DataTable dt = new DataTable("ContactDB");
+
+
+                        sda.Fill(dt);
+
+                        txtFName.Text = dt.Rows[0]["FName"].ToString();
+                        txtLName.Text = dt.Rows[0]["LName"].ToString();
+                        txtPhone.Text = dt.Rows[0]["Phone"].ToString();
+                        txtEmail.Text = dt.Rows[0]["Email"].ToString();
+
+
+
+                    }
+                }
+            } catch (Exception)
+            {
+                MessageBox.Show("Could not fill contacts");
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+        private void Update()
+
+        {
+
+            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
+
+            string CmdString = string.Empty;
+            SqlConnection con = new SqlConnection(ConString);
+            try
+            {
+
+                using (con)
+
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("UPDATE [dbo].[Contacts] SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email WHERE ID = " + id, con))
                     {
 
                         cmd.Parameters.AddWithValue("@FName", txtFName.Text);
                         cmd.Parameters.AddWithValue("@LName", txtLName.Text);
                         cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
                         cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
-
                         cmd.ExecuteNonQuery();
                         
-
                     }
+
+
+
+
+
+
 
                 }
             } catch (Exception)
             {
-                MessageBox.Show("Could not add contact");
-
+                MessageBox.Show("Could not update contact");
             } finally
             {
-               
-            }
-
-
-
-
-
-
-
+                con.Close();
             }
         }
 
