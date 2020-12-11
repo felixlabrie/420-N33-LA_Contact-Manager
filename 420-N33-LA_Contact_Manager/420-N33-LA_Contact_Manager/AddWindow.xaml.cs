@@ -97,7 +97,6 @@ namespace _420_N33_LA_Contact_Manager
                     cmd.Parameters.AddWithValue("@LName", txtLName);
                     cmd.Parameters.AddWithValue("@Phone", txtPhone);
                     cmd.Parameters.AddWithValue("@Email", txtEmail);
-                    int rows = cmd.ExecuteNonQuery();
                     con.Close();
                 }
 

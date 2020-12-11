@@ -77,7 +77,7 @@ namespace _420_N33_LA_Contact_Manager
                 DataTable dt = new DataTable("ContactDB");
 
                 sda.Fill(dt);
-                lvDataBinding.ItemsSource = dt.DefaultView;
+                userDataGrid.ItemsSource = dt.DefaultView;
 
 
             }
@@ -97,12 +97,12 @@ namespace _420_N33_LA_Contact_Manager
                 using (SqlCommand cmd = new SqlCommand("UPDATE ContactDB SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email" + "WHERE ID=@ID", con))
                 {
 
-                    cmd.Parameters.AddWithValue("@FName", txtFName);
-                    cmd.Parameters.AddWithValue("@LName", txtLName);
-                    cmd.Parameters.AddWithValue("@Phone", txtPhone);
-                    cmd.Parameters.AddWithValue("@Email", txtEmail);
-                    int rows = cmd.ExecuteNonQuery();
-                    con.Close();
+                    //cmd.Parameters.AddWithValue("@FName", txtFName);
+                    //cmd.Parameters.AddWithValue("@LName", txtLName);
+                    //cmd.Parameters.AddWithValue("@Phone", txtPhone);
+                    //cmd.Parameters.AddWithValue("@Email", txtEmail);
+                    //int rows = cmd.ExecuteNonQuery();
+                    //con.Close();
                 }
 
 

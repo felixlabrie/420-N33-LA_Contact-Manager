@@ -7,42 +7,28 @@
         mc:Ignorable="d"
         Title="Contact Information" Height="220" Width="200">
 
+    <Grid  ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Content="First Name: "/>
+        <TextBox Name="txtFName" Grid.Column="1"/>
+        <Label Content="Last Name: " Grid.Row="1"/>
+        <TextBox Name="txtLName" Grid.Column="1" Grid.Row="1"/>
+        <Label Content="Phone: " Grid.Row="2"/>
+        <TextBox Name="txtPhone" Grid.Column="1" Grid.Row="2"/>
+        <Label Content="Email: " Grid.Row="3"/>
+        <TextBox Name="txtEmail" Grid.Column="1" Grid.Row="3"/>
+        <Button x:Name="save" Content="Save" Click="save_Click" Height="22"  Grid.Column="0" Grid.Row="4" Margin="21,10,21,6.667"/>
+        <Button Name="goBack" Content="Cancel" Click="goBack_Click" Height="23" Grid.Column="1" Grid.Row="4" Margin="10,9,27,6.667"></Button>
 
-
-    <ListView Name="lvDataBinding" BorderThickness="0" >
-
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Name:"/>
-                            <TextBox Name="txtFName"  Text="{Binding FName}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Last Name:"/>
-                            <TextBox Name="txtLName"  Text="{Binding LName}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Phone Number:"/>
-                            <TextBox Name="txtPhone"  Text="{Binding Phone}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Email: "/>
-                            <TextBox Name="txtEmail" Text="{Binding Email}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content=" "/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="save" Content="Save Modifications" Click="save_Click" Height="22"  Grid.Column="0" Grid.Row="4"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name="goBack" Content="Cancel and Exit" Click="goBack_Click" Height="23" Grid.Column="1" Grid.Row="4"></Button>
-                        </StackPanel>
-
-
-                    </StackPanel>
-
-    </ListView>
-
-
-
+    </Grid>
 </Window>
