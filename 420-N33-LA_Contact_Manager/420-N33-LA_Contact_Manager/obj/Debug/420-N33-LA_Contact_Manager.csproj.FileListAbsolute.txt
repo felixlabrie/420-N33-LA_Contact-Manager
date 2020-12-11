@@ -49,3 +49,7 @@ C:\Users\tristangiguere\Source\Repos\420-N33-LA_Contact-Manager\420-N33-LA_Conta
 C:\Users\tristangiguere\Source\Repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\_420_N33_LA_Contact_Manager.Properties.Resources.resources
 C:\Users\tristangiguere\Source\Repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\420-N33-LA_Contact_Manager.csproj.GenerateResource.cache
 C:\Users\tristangiguere\Source\Repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\420-N33-LA_Contact_Manager.csproj.CoreCompileInputs.cache
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\AddWindow.g.cs
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\SecondWindow.g.cs
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\AddWindow.baml
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\SecondWindow.baml
