@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace _420_N33_LA_Contact_Manager
 {
@@ -69,35 +70,48 @@ namespace _420_N33_LA_Contact_Manager
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
 
             string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-
+            SqlConnection con = new SqlConnection(ConString);
+            try
             {
-                con.Open();
 
-                using (SqlDataAdapter a = new SqlDataAdapter(
-                    "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id, con))
+
+                using (con)
+
                 {
-                    
-                    CmdString = "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id;
+                    con.Open();
 
-                    SqlCommand cmd = new SqlCommand(CmdString, con);
+                    using (SqlDataAdapter a = new SqlDataAdapter(
+                        "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id, con))
+                    {
 
-                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                        CmdString = "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id;
 
-                    DataTable dt = new DataTable("ContactDB");
+                        SqlCommand cmd = new SqlCommand(CmdString, con);
 
+                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
-                    sda.Fill(dt);
-
-                    txtFName.Text = dt.Rows[0]["FName"].ToString();
-                    txtLName.Text = dt.Rows[0]["LName"].ToString();
-                    txtPhone.Text = dt.Rows[0]["Phone"].ToString();
-                    txtEmail.Text = dt.Rows[0]["Email"].ToString();
+                        DataTable dt = new DataTable("ContactDB");
 
 
+                        sda.Fill(dt);
 
+                        txtFName.Text = dt.Rows[0]["FName"].ToString();
+                        txtLName.Text = dt.Rows[0]["LName"].ToString();
+                        txtPhone.Text = dt.Rows[0]["Phone"].ToString();
+                        txtEmail.Text = dt.Rows[0]["Email"].ToString();
+
+
+
+                    }
                 }
+            } catch (Exception)
+            {
+                MessageBox.Show("Could not fill contacts");
+
+            }
+            finally
+            {
+                con.Close();
             }
 
         }
@@ -109,28 +123,38 @@ namespace _420_N33_LA_Contact_Manager
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
 
             string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-
+            SqlConnection con = new SqlConnection(ConString);
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE [dbo].[Contacts] SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email WHERE ID = " + id, con))
+
+                using (con)
+
                 {
-                    
-                    cmd.Parameters.AddWithValue("@FName", txtFName.Text);
-                    cmd.Parameters.AddWithValue("@LName", txtLName.Text);
-                    cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
-                    cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("UPDATE [dbo].[Contacts] SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email WHERE ID = " + id, con))
+                    {
+
+                        cmd.Parameters.AddWithValue("@FName", txtFName.Text);
+                        cmd.Parameters.AddWithValue("@LName", txtLName.Text);
+                        cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
+                        cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+                        cmd.ExecuteNonQuery();
+                        
+                    }
+
+
+
+
+
+
+
                 }
-
-
-
-
-
-
-
+            } catch (Exception)
+            {
+                MessageBox.Show("Could not update contact");
+            } finally
+            {
+                con.Close();
             }
         }
 

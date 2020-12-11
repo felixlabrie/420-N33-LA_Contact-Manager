@@ -53,7 +53,7 @@ namespace _420_N33_LA_Contact_Manager
             if (phone.IsMatch(txtPhone.Text))
             {
                 MessageBox.Show("Phone number cannot include letters, try again");
-                return;
+        
             }
             Add();
             MainWindow main = new MainWindow();
@@ -63,53 +63,78 @@ namespace _420_N33_LA_Contact_Manager
 
         private void FillContacts()
 
-        {
-
+        { 
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
 
             string CmdString = string.Empty;
 
-            using (SqlConnection con = new SqlConnection(ConString))
+            SqlConnection con = new SqlConnection(ConString);
 
+            try
             {
+               
+                using (con)
 
-                CmdString = "SELECT FName, LName FROM Contacts WHERE ID = " + id;
+                {
 
-                SqlCommand cmd = new SqlCommand(CmdString, con);
+                    CmdString = "SELECT FName, LName FROM Contacts WHERE ID = " + id;
 
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    SqlCommand cmd = new SqlCommand(CmdString, con);
 
-                DataTable dt = new DataTable("Contacts");
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+
+                    DataTable dt = new DataTable("Contacts");
 
 
 
 
+                }
+            } catch (Exception)
+            {
+                MessageBox.Show("Could not fill the database");
+            } finally
+            {
+                con.Close();
             }
 
         }
         private void Add()
         {
+            
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
-
             string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-
+            SqlConnection con = new SqlConnection(ConString);
+            try
             {
-                con.Open();
-      
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[Contacts](FName, LName, Phone, Email) VALUES (@FName, @LName, @Phone, @Email)", con))
+                
+
+                using (con)
+
                 {
+                    con.Open();
 
-                    cmd.Parameters.AddWithValue("@FName", txtFName.Text);
-                    cmd.Parameters.AddWithValue("@LName", txtLName.Text);
-                    cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
-                    cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[Contacts](FName, LName, Phone, Email) VALUES (@FName, @LName, @Phone, @Email)", con))
+                    {
 
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                        cmd.Parameters.AddWithValue("@FName", txtFName.Text);
+                        cmd.Parameters.AddWithValue("@LName", txtLName.Text);
+                        cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
+                        cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+
+                        cmd.ExecuteNonQuery();
+                        
+
+                    }
 
                 }
+            } catch (Exception)
+            {
+                MessageBox.Show("Could not add contact");
+
+            } finally
+            {
+               
+            }
 
 
 
