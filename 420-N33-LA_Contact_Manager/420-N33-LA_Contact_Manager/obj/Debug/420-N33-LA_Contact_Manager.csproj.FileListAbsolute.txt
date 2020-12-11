@@ -70,3 +70,9 @@ C:\Users\Marin\Source\Repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manage
 C:\Users\Marin\Source\Repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\420-N33-LA_Contact_Manager.pdb
 C:\Users\Marin\Source\Repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\bin\Debug\System.Data.SqlServerCe.dll
 C:\Users\Marin\Source\Repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\420-N33-LA_Contact_Manager.csproj.CopyComplete
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\bin\Debug\System.Data.SqlServerCe.dll
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\AddWindow.g.cs
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\SecondWindow.g.cs
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\AddWindow.baml
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\SecondWindow.baml
+C:\Users\felixetiennelabrie\source\repos\420-N33-LA_Contact-Manager\420-N33-LA_Contact_Manager\420-N33-LA_Contact_Manager\obj\Debug\420-N33-LA_Contact_Manager.csproj.CopyComplete
