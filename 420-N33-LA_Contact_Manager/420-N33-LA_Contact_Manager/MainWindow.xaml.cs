@@ -25,6 +25,9 @@ namespace _420_N33_LA_Contact_Manager
         {
             InitializeComponent();
 
+            listContacts.ItemsSource = DbUtil.FillData();
+
+
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -36,13 +39,9 @@ namespace _420_N33_LA_Contact_Manager
 
         private void delete_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
-        private void save_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         
 
 
@@ -84,5 +83,6 @@ namespace _420_N33_LA_Contact_Manager
                 throw new ApplicationException("Error", ex);
             }
         }
+
     }
 }

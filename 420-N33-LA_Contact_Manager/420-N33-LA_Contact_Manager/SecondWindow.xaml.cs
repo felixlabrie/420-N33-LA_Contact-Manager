@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Data.SqlServerCe;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +16,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Text.RegularExpressions;
 
 namespace _420_N33_LA_Contact_Manager
 {
@@ -70,48 +70,35 @@ namespace _420_N33_LA_Contact_Manager
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
 
             string CmdString = string.Empty;
-            SqlConnection con = new SqlConnection(ConString);
-            try
+
+            using (SqlConnection con = new SqlConnection(ConString))
+
             {
+                con.Open();
 
-
-                using (con)
-
+                using (SqlDataAdapter a = new SqlDataAdapter(
+                    "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id, con))
                 {
-                    con.Open();
+                    
+                    CmdString = "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id;
 
-                    using (SqlDataAdapter a = new SqlDataAdapter(
-                        "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id, con))
-                    {
+                    SqlCommand cmd = new SqlCommand(CmdString, con);
 
-                        CmdString = "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id;
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
-                        SqlCommand cmd = new SqlCommand(CmdString, con);
-
-                        SqlDataAdapter sda = new SqlDataAdapter(cmd);
-
-                        DataTable dt = new DataTable("ContactDB");
+                    DataTable dt = new DataTable("ContactDB");
 
 
-                        sda.Fill(dt);
+                    sda.Fill(dt);
 
-                        txtFName.Text = dt.Rows[0]["FName"].ToString();
-                        txtLName.Text = dt.Rows[0]["LName"].ToString();
-                        txtPhone.Text = dt.Rows[0]["Phone"].ToString();
-                        txtEmail.Text = dt.Rows[0]["Email"].ToString();
+                    txtFName.Text = dt.Rows[0]["FName"].ToString();
+                    txtLName.Text = dt.Rows[0]["LName"].ToString();
+                    txtPhone.Text = dt.Rows[0]["Phone"].ToString();
+                    txtEmail.Text = dt.Rows[0]["Email"].ToString();
 
 
 
-                    }
                 }
-            } catch (Exception)
-            {
-                MessageBox.Show("Could not fill contacts");
-
-            }
-            finally
-            {
-                con.Close();
             }
 
         }
@@ -123,38 +110,28 @@ namespace _420_N33_LA_Contact_Manager
             string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
 
             string CmdString = string.Empty;
-            SqlConnection con = new SqlConnection(ConString);
-            try
+
+            using (SqlConnection con = new SqlConnection(ConString))
+
             {
-
-                using (con)
-
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("UPDATE [dbo].[Contacts] SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email WHERE ID = " + id, con))
                 {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("UPDATE [dbo].[Contacts] SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email WHERE ID = " + id, con))
-                    {
-
-                        cmd.Parameters.AddWithValue("@FName", txtFName.Text);
-                        cmd.Parameters.AddWithValue("@LName", txtLName.Text);
-                        cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
-                        cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
-                        cmd.ExecuteNonQuery();
-                        
-                    }
-
-
-
-
-
-
-
+                    
+                    cmd.Parameters.AddWithValue("@FName", txtFName.Text);
+                    cmd.Parameters.AddWithValue("@LName", txtLName.Text);
+                    cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
+                    cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
                 }
-            } catch (Exception)
-            {
-                MessageBox.Show("Could not update contact");
-            } finally
-            {
-                con.Close();
+
+
+
+
+
+
+
             }
         }
 

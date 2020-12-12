@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace _420_N33_LA_Contact_Manager
 {
     class DbUtil
     {
+        //DbUtil() { }
+
+        //private static readonly Lazy<DbUtil> onlyinstance = new Lazy<DbUtil>(() => new DbUtil());
+
+        //private static DbUtil Instance => onlyinstance.Value;
 
         // Retrieve all contacts in the Db
         public static void ViewRecords()
@@ -88,6 +94,32 @@ namespace _420_N33_LA_Contact_Manager
             listall.ExecuteNonQuery();
 
             con.Close();
+        }
+
+        // Populate ListBox
+        public static List<User> FillData()
+        {
+            // Create connection
+            var con = new SqlConnection(@"data source=localhost\SQLEXPRESS;database = ContactDB;Trusted_Connection=True");
+            con.Open();
+
+            // Query
+            SqlCommand list = new SqlCommand("SELECT Id, FName, LName FROM Contacts", con);
+
+            SqlDataReader reader = list.ExecuteReader();
+
+            List<User> users = new List<User>();
+
+            while (reader.Read())
+            {
+                users.Add(new User() {Id = (int)reader["Id"], FName = (string)reader["FName"], LName = (string)reader["LName"] });
+            }
+
+          
+            con.Close();
+
+            return users;
+
         }
 
     }

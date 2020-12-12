@@ -35,18 +35,38 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <ListBox x:Name="listContacts" Grid.RowSpan="9" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4">
+        <!-- <ListBox x:Name="listContacts" Grid.RowSpan="9" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="8" Margin="0,0,0,0.5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding Id}" Margin="2" />
+                        <TextBlock Text="{Binding firstName}" Margin="2"/>
+                        <TextBlock Text="{Binding lastName}" Margin="2" FontWeight="Bold"/>
+                    </StackPanel>
 
-        </ListBox>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox> -->
 
-        <Button x:Name="add" Click="add_Click" Content="Add New" Grid.Column="6" HorizontalAlignment="Center" Grid.Row="9" Width="66" Margin="4.5,11,5,0" Height="20" VerticalAlignment="Top"/>
-        <Button x:Name="edit" Click="edit_Click" Content="Edit" Grid.Column="8" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
-        <Button x:Name="delete" Click="delete_Click" Content="Delete" Grid.Column="7" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
 
-        <Button x:Name="import" Click="import_Click" Content="Import CSV" Grid.Column="10" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="66"/>
-        <Button x:Name="export" Click="export_Click" Content="Export CSV" Grid.Column="10" HorizontalAlignment="Center" Grid.Row="8" VerticalAlignment="Center" Width="66"/>
 
-        <TextBox  Foreground="white"  Grid.ColumnSpan="5" Grid.Column="6" HorizontalAlignment="Center" Height="24" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="380"/>
+        <Button x:Name="add" Click="add_Click" Content="Add New" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="7" Width="136" Margin="10,13,5,0" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button x:Name="edit" Click="edit_Click" Content="Edit" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Width="136" Margin="10,12,5,10.5" Grid.ColumnSpan="2"/>
+        <Button x:Name="delete" Click="delete_Click" Content="Delete" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="6" VerticalAlignment="Center" Width="136" Margin="10,12.5,5,10" Grid.ColumnSpan="2"/>
+
+        <Button x:Name="import" Click="import_Click" Content="Import CSV" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="136" Grid.ColumnSpan="2" Margin="10,11,5,11.5"/>
+        <Button x:Name="export" Click="export_Click" Content="Export CSV" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="8" VerticalAlignment="Center" Width="136" Grid.ColumnSpan="2" Margin="10,11.5,5,11"/>
+        <ListView Name="listContacts" Grid.ColumnSpan="7" HorizontalAlignment="Left" Height="362" Grid.RowSpan="9" VerticalAlignment="Top" Width="508" Grid.Column="1" Grid.Row="1" Margin="10,10,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock Text="{Binding FName}"/>
+                        <TextBlock Text=" "/>
+                        <TextBlock Text="{Binding LName}" FontWeight="Bold" />
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </Grid>
 
