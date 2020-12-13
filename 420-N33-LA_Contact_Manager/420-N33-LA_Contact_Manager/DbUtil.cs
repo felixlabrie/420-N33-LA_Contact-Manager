@@ -5,41 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using System.Windows;
 
 namespace _420_N33_LA_Contact_Manager
 {
     class DbUtil
     {
-        //DbUtil() { }
+        // Create connection
+        private static SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-HD42AFN\SQLEXPRESS;Initial Catalog=ContactDB;Integrated Security=True");
+        private static DataSet ds = new DataSet();
+        private static SqlDataAdapter adapter;
+        public DbUtil()
+        {
+
+        }
 
         //private static readonly Lazy<DbUtil> onlyinstance = new Lazy<DbUtil>(() => new DbUtil());
 
         //private static DbUtil Instance => onlyinstance.Value;
 
         // Retrieve all contacts in the Db
-        public static void ViewRecords()
+        public static DataSet ViewRecords()
         {
-            // Create connection
-            var con = new SqlConnection(@"data source=localhost\SQLEXPRESS;database = ContactDB;Trusted_Connection=True");
-            con.Open();
-            
-            // Code stack to list all items
-            SqlCommand listall = new SqlCommand("SELECT Id, FName, LName, Email, Phone FROM Contacts", con);
-            SqlDataReader sdrListAll = listall.ExecuteReader();
 
-            while (sdrListAll.Read())
-            {
-                // Display Record(s)
-                Console.WriteLine(sdrListAll["Id"] + " " + sdrListAll["FName"] + " " + sdrListAll["LName"] + " " + sdrListAll["Email"] + " " + sdrListAll["Phone"]);
-            }
+            con.Open();
+            // Code stack to list all items
+            adapter = new SqlDataAdapter("SELECT Id, FName, LName, Email, Phone FROM Contacts", con);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "Contacts");
+
             con.Close();
+            return ds;
         }
 
         // Edit record
         public static void EditRecords(int id, string FName, string LName, string Email, string Phone)
         {
-            // Create connection
-            var con = new SqlConnection(@"data source=localhost\SQLEXPRESS;database = ContactDB;Trusted_Connection=True");
             con.Open();
 
             // Code stack to update the record
@@ -56,30 +57,34 @@ namespace _420_N33_LA_Contact_Manager
 
             con.Close();
         }
-        
+
         // Delete the record(s)
-        public static void DeleteRecords(int id)
+        public static void DeleteRecord(int id)
         {
-            // Create connection
-            var con = new SqlConnection(@"data source=localhost\SQLEXPRESS;database = ContactDB;Trusted_Connection=True");
             con.Open();
+            try
+            {
+                // Code stack to list all items
+                SqlCommand listall = new SqlCommand("DELETE FROM Contacts WHERE id = @ID;", con);
 
-            // Code stack to list all items
-            SqlCommand listall = new SqlCommand("DELETE FROM Contacts WHERE id = @ID;", con);
+                // Set all parameters
+                listall.Parameters.AddWithValue("@ID", id);
 
-            // Set all parameters
-            listall.Parameters.AddWithValue("@ID", id);
-
-            listall.ExecuteNonQuery();
-
-            con.Close();
+                listall.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Delete the contact");
+            }
+            finally
+            {
+                con.Close();
+            }
         }
-        
+
         // Create new record in Database
         public static void CreateRecords(string FName, string LName, string Email, string Phone)
         {
-            // Create connection
-            var con = new SqlConnection(@"data source=localhost\SQLEXPRESS;database = ContactDB;Trusted_Connection=True");
             con.Open();
 
             // Code stack to create item
@@ -99,8 +104,6 @@ namespace _420_N33_LA_Contact_Manager
         // Populate ListBox
         public static List<User> FillData()
         {
-            // Create connection
-            var con = new SqlConnection(@"data source=localhost\SQLEXPRESS;database = ContactDB;Trusted_Connection=True");
             con.Open();
 
             // Query
@@ -112,15 +115,68 @@ namespace _420_N33_LA_Contact_Manager
 
             while (reader.Read())
             {
-                users.Add(new User() {Id = (int)reader["Id"], FName = (string)reader["FName"], LName = (string)reader["LName"] });
+                users.Add(new User() { Id = (int)reader["Id"], FName = (string)reader["FName"], LName = (string)reader["LName"] });
             }
 
-          
+
             con.Close();
 
             return users;
 
         }
 
+        public bool Add(string FName, string LName, string email, string Phone)
+        {
+            try
+            {
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Contacts(FName, LName, Phone, Email) VALUES (@FName, @LName, @Phone, @Email)", con))
+                {
+                    cmd.Parameters.AddWithValue("@FName", FName);
+                    cmd.Parameters.AddWithValue("@LName", LName);
+                    cmd.Parameters.AddWithValue("@Phone", Phone);
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    return true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not add contact");
+                con.Close();
+                return false;
+            }
+        }
+
+        public void Update(int Id, string FName, string LName, string email, string Phone)
+        {
+            try
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("UPDATE Contacts SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email WHERE Id = " + Id, con))
+                {
+
+                    cmd.Parameters.AddWithValue("@FName", FName);
+                    cmd.Parameters.AddWithValue("@LName", LName);
+                    cmd.Parameters.AddWithValue("@Phone", Phone);
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Updated Successfully");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Update contact");
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
     }
 }
+
