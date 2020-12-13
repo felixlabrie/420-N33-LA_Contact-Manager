@@ -14,11 +14,11 @@
 
         <DataGrid Margin="20" AutoGenerateColumns="False" Name="dgContacts" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Foreground="Black" Header="Id" Binding="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Width="5" Foreground="Black" Header="Id" Binding="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Width="*" Foreground="Black" Header="First Name" Binding="{Binding FName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Width="*" Foreground="Black" Header="Last Name" Binding="{Binding LName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Width="*" Foreground="Black" Header="Phone" Binding="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Width="*" Foreground="Black" Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Width="2*" Foreground="Black" Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
         </DataGrid>
 

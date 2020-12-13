@@ -6,15 +6,9 @@ using System.Data.SqlClient;
 using System.Data.SqlServerCe;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace _420_N33_LA_Contact_Manager
 {
@@ -23,116 +17,55 @@ namespace _420_N33_LA_Contact_Manager
     /// </summary>
     public partial class SecondWindow : Window
     {
-        public SecondWindow()
+        DbUtil dbContext = new DbUtil();
+        public SecondWindow(User user)
         {
             InitializeComponent();
-
-            Loaded += SecondWindow_Loaded;
-
+            Id.Text = user.Id.ToString();
+            txtFName.Text = user.FName;
+            txtLName.Text = user.LName;
+            txtEmail.Text = user.Email;
+            txtPhone.Text = user.Phone;
         }
 
-        private void SecondWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            FillContacts();
-        }
-        private int id;
-        public int ID
-        {
-            get { return id; }
-            set { id = value; }
-        }
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            main.Show();
             this.Close();
         }
 
-        private void save_Click(object sender, RoutedEventArgs e)
+        private void Update_Click(object sender, RoutedEventArgs e)
         {
+            string Fname = txtFName.Text;
+            string Lname = txtLName.Text;
+            string email = txtEmail.Text;
+            string phoneNumber = txtPhone.Text;
+            int recordId = Convert.ToInt32(Id.Text);
+
+            if (string.IsNullOrEmpty(Fname) || string.IsNullOrEmpty(Lname)
+                || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phoneNumber))
+            {
+                MessageBox.Show("Please fill all fields");
+                return;
+            }
             Regex phone = new Regex(@"[a-zA-Z]");
             if (phone.IsMatch(txtPhone.Text))
             {
                 MessageBox.Show("Phone number cannot include letters, try again");
                 return;
             }
-            Update();
+
+            dbContext.Update(recordId, Fname, Lname, email, phoneNumber);
             MainWindow main = new MainWindow();
             main.Show();
-            this.Close();
+            this.Hide();
         }
 
-        private void FillContacts()
-
+        private void Update_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
-            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
-
-            string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-
-            {
-                con.Open();
-
-                using (SqlDataAdapter a = new SqlDataAdapter(
-                    "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id, con))
-                {
-                    
-                    CmdString = "SELECT FName, LName, Phone, Email FROM [dbo].[Contacts] WHERE ID = " + id;
-
-                    SqlCommand cmd = new SqlCommand(CmdString, con);
-
-                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
-
-                    DataTable dt = new DataTable("ContactDB");
-
-
-                    sda.Fill(dt);
-
-                    txtFName.Text = dt.Rows[0]["FName"].ToString();
-                    txtLName.Text = dt.Rows[0]["LName"].ToString();
-                    txtPhone.Text = dt.Rows[0]["Phone"].ToString();
-                    txtEmail.Text = dt.Rows[0]["Email"].ToString();
-
-
-
-                }
-            }
-
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Hide();
         }
-
-        private void Update()
-
-        {
-
-            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
-
-            string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE [dbo].[Contacts] SET FName=@FName, LName=@LName, Phone=@Phone, Email=@Email WHERE ID = " + id, con))
-                {
-                    
-                    cmd.Parameters.AddWithValue("@FName", txtFName.Text);
-                    cmd.Parameters.AddWithValue("@LName", txtLName.Text);
-                    cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
-                    cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                }
-
-
-
-
-
-
-
-            }
-        }
-
     }
 }
+
