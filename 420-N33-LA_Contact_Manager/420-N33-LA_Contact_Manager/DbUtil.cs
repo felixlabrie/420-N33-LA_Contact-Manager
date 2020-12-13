@@ -35,24 +35,24 @@ namespace _420_N33_LA_Contact_Manager
         }
 
         // Edit record
-        public static void EditRecords(int id, string FName, string LName, string Email, string Phone)
-        {
-            con.Open();
+        //public static void EditRecords(int id, string FName, string LName, string Email, string Phone)
+        //{
+        //    con.Open();
 
-            // Code stack to update the record
-            SqlCommand listall = new SqlCommand("UPDATE Contacts SET FName = @FName, LName = @LName, Email = @Email, Phone = @Phone WHERE id = @ID;", con);
+        //    // Code stack to update the record
+        //    SqlCommand listall = new SqlCommand("UPDATE Contacts SET FName = @FName, LName = @LName, Email = @Email, Phone = @Phone WHERE id = @ID;", con);
 
-            // Set all parameters
-            listall.Parameters.AddWithValue("@ID", id);
-            listall.Parameters.AddWithValue("@FName", FName);
-            listall.Parameters.AddWithValue("@LName", LName);
-            listall.Parameters.AddWithValue("@Email", Email);
-            listall.Parameters.AddWithValue("@Phone", Phone);
+        //    // Set all parameters
+        //    listall.Parameters.AddWithValue("@ID", id);
+        //    listall.Parameters.AddWithValue("@FName", FName);
+        //    listall.Parameters.AddWithValue("@LName", LName);
+        //    listall.Parameters.AddWithValue("@Email", Email);
+        //    listall.Parameters.AddWithValue("@Phone", Phone);
 
-            listall.ExecuteNonQuery();
+        //    listall.ExecuteNonQuery();
 
-            con.Close();
-        }
+        //    con.Close();
+        //}
 
         // Delete the record(s)
         public static void DeleteRecord(int id)
@@ -79,23 +79,23 @@ namespace _420_N33_LA_Contact_Manager
         }
 
         // Create new record in Database
-        public static void CreateRecords(string FName, string LName, string Email, string Phone)
-        {
-            con.Open();
+        //public static void CreateRecords(string FName, string LName, string Email, string Phone)
+        //{
+        //    con.Open();
 
-            // Code stack to create item
-            SqlCommand listall = new SqlCommand("INSERT INTO Contacts(FName, LName, Email, Phone) VALUES(@FName, @LName, @Email, @Phone);", con);
+        //    // Code stack to create item
+        //    SqlCommand listall = new SqlCommand("INSERT INTO Contacts(FName, LName, Email, Phone) VALUES(@FName, @LName, @Email, @Phone);", con);
 
-            // Set all parameters
-            listall.Parameters.AddWithValue("@FName", FName);
-            listall.Parameters.AddWithValue("@LName", LName);
-            listall.Parameters.AddWithValue("@Email", Email);
-            listall.Parameters.AddWithValue("@Phone", Phone);
+        //    // Set all parameters
+        //    listall.Parameters.AddWithValue("@FName", FName);
+        //    listall.Parameters.AddWithValue("@LName", LName);
+        //    listall.Parameters.AddWithValue("@Email", Email);
+        //    listall.Parameters.AddWithValue("@Phone", Phone);
 
-            listall.ExecuteNonQuery();
+        //    listall.ExecuteNonQuery();
 
-            con.Close();
-        }
+        //    con.Close();
+        //}
 
         // Populate ListBox
         public static List<User> FillData()
