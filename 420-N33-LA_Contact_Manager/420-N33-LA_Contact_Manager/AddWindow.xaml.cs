@@ -23,127 +23,52 @@ namespace _420_N33_LA_Contact_Manager
     /// </summary>
     public partial class AddWindow : Window
     {
+        DbUtil dbContext = new DbUtil();
         public AddWindow()
         {
             InitializeComponent();
 
-            Loaded += AddWindow_Loaded;
-        }
-
-        private void AddWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            FillContacts();
-        }
-        private int id;
-        public int ContactID
-        {
-            get { return id; }
-            set { id = value; }
         }
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            main.Show();
             this.Close();
         }
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
+            string Fname = txtFName.Text;
+            string Lname = txtLName.Text;
+            string email = txtEmail.Text;
+            string phoneNumber = txtPhone.Text;
+
+            if (string.IsNullOrEmpty(Fname) || string.IsNullOrEmpty(Lname)
+                || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phoneNumber))
+            {
+                MessageBox.Show("Please fill all fields.!");
+                return;
+            }
             Regex phone = new Regex(@"[a-zA-Z]");
-            if (phone.IsMatch(txtPhone.Text))
+            if (phone.IsMatch(phoneNumber))
             {
                 MessageBox.Show("Phone number cannot include letters, try again");
-        
+                return;
             }
-            Add();
+            var res = dbContext.Add(Fname, Lname, email, phoneNumber);
+            if (res)
+                MessageBox.Show("Record Added Successfully.");
+            txtFName.Text = string.Empty;
+            txtLName.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            txtPhone.Text = string.Empty;
+        }
+
+        private void AddNew_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
             MainWindow main = new MainWindow();
             main.Show();
-            this.Close();
+            this.Hide();
         }
-
-        private void FillContacts()
-
-        { 
-            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
-
-            string CmdString = string.Empty;
-
-            SqlConnection con = new SqlConnection(ConString);
-
-            try
-            {
-               
-                using (con)
-
-                {
-
-                    CmdString = "SELECT FName, LName FROM Contacts WHERE ID = " + id;
-
-                    SqlCommand cmd = new SqlCommand(CmdString, con);
-
-                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
-
-                    DataTable dt = new DataTable("Contacts");
-
-
-
-
-                }
-            } catch (Exception)
-            {
-                MessageBox.Show("Could not fill the database");
-            } finally
-            {
-                con.Close();
-            }
-
-        }
-        private void Add()
-        {
-            
-            string ConString = ConfigurationManager.ConnectionStrings["ContactsConnectionString"].ConnectionString;
-            string CmdString = string.Empty;
-            SqlConnection con = new SqlConnection(ConString);
-            try
-            {
-                
-
-                using (con)
-
-                {
-                    con.Open();
-
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[Contacts](FName, LName, Phone, Email) VALUES (@FName, @LName, @Phone, @Email)", con))
-                    {
-
-                        cmd.Parameters.AddWithValue("@FName", txtFName.Text);
-                        cmd.Parameters.AddWithValue("@LName", txtLName.Text);
-                        cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
-                        cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
-
-                        cmd.ExecuteNonQuery();
-                        
-
-                    }
-
-                }
-            } catch (Exception)
-            {
-                MessageBox.Show("Could not add contact");
-
-            } finally
-            {
-               
-            }
-
-
-
-
-
-
-
-            }
-        }
-
     }
+}
+
 

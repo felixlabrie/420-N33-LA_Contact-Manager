@@ -8,65 +8,29 @@
         Title="Contact Manager" Height="450" Width="800">
     <Grid Background="#1C1C1C">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
 
-        <!-- <ListBox x:Name="listContacts" Grid.RowSpan="9" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="8" Margin="0,0,0,0.5">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <TextBlock Text="{Binding Id}" Margin="2" />
-                        <TextBlock Text="{Binding firstName}" Margin="2"/>
-                        <TextBlock Text="{Binding lastName}" Margin="2" FontWeight="Bold"/>
-                    </StackPanel>
+        <DataGrid Margin="20" AutoGenerateColumns="False" Name="dgContacts" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Foreground="Black" Header="Id" Binding="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Width="*" Foreground="Black" Header="First Name" Binding="{Binding FName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Width="*" Foreground="Black" Header="Last Name" Binding="{Binding LName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Width="*" Foreground="Black" Header="Phone" Binding="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Width="*" Foreground="Black" Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DataGrid.Columns>
+        </DataGrid>
 
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox> -->
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <Button x:Name="add" Click="add_Click" Content="Add New" HorizontalAlignment="Center" Width="136" Margin="10,20,0,0" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <Button x:Name="edit" Click="edit_Click" Content="Edit" HorizontalAlignment="Center" VerticalAlignment="Center" Width="136" Margin="10,20,0,0" Grid.ColumnSpan="2"/>
+            <Button x:Name="delete" Click="delete_Click" Content="Delete" HorizontalAlignment="Center" VerticalAlignment="Center" Width="136" Margin="10,20,0,0" Grid.ColumnSpan="2"/>
 
+            <Button x:Name="import" Click="import_Click" Content="Import CSV" HorizontalAlignment="Center" VerticalAlignment="Center" Width="136" Grid.ColumnSpan="2" Margin="10,20,0,0"/>
+            <Button x:Name="export" Click="export_Click" Content="Export CSV" HorizontalAlignment="Center" VerticalAlignment="Center" Width="136" Grid.ColumnSpan="2" Margin="10,20,0,0"/>
+        </StackPanel>
 
-
-        <Button x:Name="add" Click="add_Click" Content="Add New" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="7" Width="136" Margin="10,13,5,0" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Button x:Name="edit" Click="edit_Click" Content="Edit" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Width="136" Margin="10,12,5,10.5" Grid.ColumnSpan="2"/>
-        <Button x:Name="delete" Click="delete_Click" Content="Delete" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="6" VerticalAlignment="Center" Width="136" Margin="10,12.5,5,10" Grid.ColumnSpan="2"/>
-
-        <Button x:Name="import" Click="import_Click" Content="Import CSV" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="136" Grid.ColumnSpan="2" Margin="10,11,5,11.5"/>
-        <Button x:Name="export" Click="export_Click" Content="Export CSV" Grid.Column="9" HorizontalAlignment="Center" Grid.Row="8" VerticalAlignment="Center" Width="136" Grid.ColumnSpan="2" Margin="10,11.5,5,11"/>
-        <ListView Name="listContacts" Grid.ColumnSpan="7" HorizontalAlignment="Left" Height="362" Grid.RowSpan="9" VerticalAlignment="Top" Width="508" Grid.Column="1" Grid.Row="1" Margin="10,10,0,0">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel>
-                        <TextBlock Text="{Binding FName}"/>
-                        <TextBlock Text=" "/>
-                        <TextBlock Text="{Binding LName}" FontWeight="Bold" />
-                    </WrapPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
 
     </Grid>
 
