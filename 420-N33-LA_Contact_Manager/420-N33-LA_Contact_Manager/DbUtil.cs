@@ -12,7 +12,7 @@ namespace _420_N33_LA_Contact_Manager
     class DbUtil
     {
         // Create connection
-        private static SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-HD42AFN\SQLEXPRESS;Initial Catalog=ContactDB;Integrated Security=True");
+        private static SqlConnection con = new SqlConnection(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=ContactDB;Integrated Security=True");
         private static DataSet ds = new DataSet();
         private static SqlDataAdapter adapter;
         public DbUtil()
