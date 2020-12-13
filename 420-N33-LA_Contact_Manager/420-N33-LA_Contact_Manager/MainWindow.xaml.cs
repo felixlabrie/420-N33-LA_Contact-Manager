@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,13 +24,11 @@ namespace _420_N33_LA_Contact_Manager
     /// </summary>
     public partial class MainWindow : Window
     {
+        DbUtil dbContext = new DbUtil();
         public MainWindow()
         {
             InitializeComponent();
-
-            listContacts.ItemsSource = DbUtil.FillData();
-
-
+            UpdateGrid();
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -36,20 +37,51 @@ namespace _420_N33_LA_Contact_Manager
             add.Show();
             this.Close();
         }
-
+        private void UpdateGrid()
+        {
+            var ds = DbUtil.ViewRecords();
+            dgContacts.ItemsSource = ds.Tables["Contacts"].DefaultView;
+        }
         private void delete_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (dgContacts.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a row");
+                return;
+            }
+            else
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    var row = (DataRowView)dgContacts.SelectedItem;
+                    var id = Convert.ToInt32(row["Id"]);
+
+                    DbUtil.DeleteRecord(id);
+                    MessageBox.Show("Record Deleted Successfully");
+                    UpdateGrid();
+                }
+            }
         }
-
-        
-
-
         //when clicking on any contact, it opens a new window with the contacts information
         private void edit_Click(object sender, RoutedEventArgs e)
         {
-            SecondWindow second = new SecondWindow();
-            second.ID = 1;
+            User record = new User();
+            if (dgContacts.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a row");
+                return;
+            }
+            else
+            {
+                var row = (DataRowView)dgContacts.SelectedItem;
+                record.Id = Convert.ToInt32(row["Id"]);
+                record.FName = row["FName"].ToString();
+                record.LName = row["LName"].ToString();
+                record.Email = row["Email"].ToString();
+                record.Phone = row["Phone"].ToString();
+            }
+            SecondWindow second = new SecondWindow(record);
             second.Show();
             this.Close();
         }
@@ -57,31 +89,79 @@ namespace _420_N33_LA_Contact_Manager
         //export contact to csv file
         private void export_Click(object sender, RoutedEventArgs e)
         {
-           // ContactToCSV();
+            ContactToCSV();
 
         }
 
         //import contact from cvs file
         private void import_Click(object sender, RoutedEventArgs e)
         {
-            string path = @"contacts.csv";
-            string st = File.ReadAllText(path);
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            List<int> list = new List<int>();
+            openFileDialog.DefaultExt = ".csv";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string path = openFileDialog.FileName;
+                var dataRows = File.ReadAllLines(path);
+
+                for (int i = 0; i < dataRows.Length; i++)
+                {
+                    var columns = dataRows[i].Split(',');
+
+                    try
+                    {
+                        string fname = columns[0];
+                        string Lname = columns[1];
+                        string Phone = columns[2];
+                        string email = columns[3];
+                        bool result = dbContext.Add(fname, Lname, email, Phone);
+                        if (!result)
+                            list.Add(i + 1);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+                }
+                if (list.Count > 0)
+                {
+                    string text = "System could not import following rows";
+                    foreach (var item in list)
+                    {
+                        text += item + " ";
+                    }
+                    MessageBox.Show(text);
+                }
+                else
+                {
+                    MessageBox.Show("Data Imported Successfully");
+                }
+                UpdateGrid();
+            }
         }
 
-        
-        public static void ContactToCSV(String name, string lastName, int phoneNumber, string email, string filepath)
+
+        public void ContactToCSV()
         {
             try
             {
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(filepath, true))
-                {
-                    file.WriteLine(name + ", " + lastName + ", " + phoneNumber + ", " + email);
-                    MessageBox.Show("Data has been sucessfully exported to CSV file", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            } catch(Exception ex)
-            {
-                throw new ApplicationException("Error", ex);
+                this.dgContacts.SelectAllCells();
+                this.dgContacts.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
+                ApplicationCommands.Copy.Execute(null, this.dgContacts);
+                this.dgContacts.UnselectAllCells();
+                String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+                Clipboard.Clear();
+                StreamWriter sw = new StreamWriter("contacts.csv");
+                sw.WriteLine(result);
+                sw.Close();
+                Process.Start("contacts.csv");
+
+                MessageBox.Show("Data Exported Successfully");
             }
+            catch (Exception ex)
+            { }
         }
 
     }
